@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Modal,
   useDisclosure,
@@ -10,16 +10,43 @@ import {
   FormControl,
   ModalFooter,
   Button,
-  Input, Textarea,
+  Input,
 } from '@chakra-ui/react'
-import {FiLogIn, FiLogOut} from 'react-icons/fi'
-import PasswordInput from "./PasswordInput";
+import {FiLogIn} from 'react-icons/fi'
+import api from "../utils/api";
 
-const LoginModal = () => {
+const LoginModal = (props) => {
   const {isOpen, onOpen, onClose} = useDisclosure()
 
   const initialRef = React.useRef(null)
   const finalRef = React.useRef(null)
+
+  const [loginForm, setLoginForm] = useState({username: "", password: ""})
+
+  function logMeIn(event) {
+    api.postToken(loginForm.username, loginForm.password)
+        .then((response) => {
+          props.setToken(response.data.access_token) && onClose()
+        }).catch((error) => {
+      if (error.response) {
+        console.log(error.response)
+        console.log(error.response.status)
+        console.log(error.response.headers)
+      }
+    })
+
+    setLoginForm(({username: "", password: ""}))
+    event.preventDefault()
+  }
+
+  function handleChange(event) {
+    const {value, name} = event.target
+    setLoginForm(prevNote => ({
+          ...prevNote, [name]: value
+        })
+    )
+  }
+
   return (
       <>
         <Button leftIcon={<FiLogIn/>} onClick={onOpen}>Login</Button>
@@ -35,16 +62,25 @@ const LoginModal = () => {
             <ModalCloseButton/>
             <ModalBody pb={6}>
               <FormControl>
-                <Textarea ref={initialRef} placeholder='Enter Username'/>
+                <Input onChange={handleChange}
+                       type="username"
+                       text={loginForm.username}
+                       name="username"
+                       value={loginForm.username}
+                       ref={initialRef}
+                       placeholder='Enter Username'/>
               </FormControl>
-
               <FormControl mt={4}>
-                <PasswordInput/>
+                <Input onChange={handleChange}
+                               type="password"
+                               text={loginForm.password}
+                               name="password"
+                               placeholder="Password"
+                               value={loginForm.password}/>
               </FormControl>
             </ModalBody>
-
             <ModalFooter>
-              <Button colorScheme='blue' mr={3}>
+              <Button onClick={logMeIn} colorScheme='blue' mr={3}>
                 Login
               </Button>
               <Button onClick={onClose}>Cancel</Button>
@@ -52,9 +88,7 @@ const LoginModal = () => {
           </ModalContent>
         </Modal>
       </>
-
   )
-
 }
 
 

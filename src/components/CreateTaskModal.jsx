@@ -12,8 +12,10 @@ import {
   Button,
   Textarea, Input,
 } from '@chakra-ui/react'
-import {FiFolderPlus, FiLogIn, FiLogOut} from 'react-icons/fi'
+import {FiFolderPlus} from 'react-icons/fi'
 import taskApi from "../utils/api";
+import filter from "../store/service";
+import {changePage} from "../utils/changePage";
 
 const CreateTaskModal = () => {
   const {isOpen, onOpen, onClose} = useDisclosure()
@@ -24,6 +26,13 @@ const CreateTaskModal = () => {
   const [username, setUser] = useState('');
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
+
+  function close() {
+    onClose();
+    taskApi.postItem(username, email, body)
+        .then(() => changePage(filter.page))
+  }
+
   return (<>
         <Button onClick={onOpen} leftIcon={<FiFolderPlus/>}
         >New task
@@ -40,17 +49,23 @@ const CreateTaskModal = () => {
             <ModalCloseButton/>
             <ModalBody pb={6}>
               <FormControl p={3}>
-                <Input value={username} onInput={(event) => {setUser(event.target.value)}} placeholder='Enter username'/>
+                <Input value={username} onInput={(event) => {
+                  setUser(event.target.value)
+                }} placeholder='Enter username'/>
               </FormControl>
               <FormControl p={3}>
-                <Input value={email} onInput={(event) => {setEmail(event.target.value)}} placeholder='Enter email'/>
+                <Input value={email} onInput={(event) => {
+                  setEmail(event.target.value)
+                }} placeholder='Enter email'/>
               </FormControl>
               <FormControl p={3}>
-                <Textarea value={body} onInput={(event) => {setBody(event.target.value)}} ref={initialRef} placeholder='Task`s text'/>
+                <Textarea value={body} onInput={(event) => {
+                  setBody(event.target.value)
+                }} ref={initialRef} placeholder='Task`s text'/>
               </FormControl>
             </ModalBody>
             <ModalFooter>
-              <Button onClick={() => taskApi.postItem(username, email, body)}  colorScheme='blue' mr={3}>
+              <Button onClick={close} colorScheme='blue' mr={3}>
                 Create
               </Button>
               <Button onClick={onClose}>Cancel</Button>

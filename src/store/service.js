@@ -1,12 +1,12 @@
 import {makeAutoObservable} from "mobx"
-import taskApi from "../utils/api";
 
 
 class Filter {
   page = 1
-  column = ''
+  totalPages = 1
   sort = ''
-  query = ''
+  ordering = ''
+  items = []
 
   constructor() {
     makeAutoObservable(this)
@@ -15,6 +15,23 @@ class Filter {
   setPage(number) {
     this.page = number
   }
+
+  setSort(value) {
+    this.sort = value
+  }
+
+  setOrdering(value) {
+    this.ordering = value
+  }
+
+  setItems(values) {
+    this.items = values
+  }
+
+  setTotalPages(count) {
+    this.totalPages = count
+  }
+
 
 }
 

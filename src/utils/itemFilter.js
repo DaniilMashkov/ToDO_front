@@ -1,5 +1,15 @@
-export function itemFilter(taskApi, setItem, setTotalPages, showToast, page, column, sort, query) {
-    taskApi.getItems(page, column, sort, query)
-        .then(response => setItem(response.data.results) || setTotalPages(Math.ceil(response.data.count) / 10))
-        .catch(err => showToast(err.response.data.err))
+import taskApi from "./api";
+import filter from "../store/service";
+
+export function itemFilter() {
+  console.log(filter.items)
+    taskApi.getItems(filter.page, filter.sort, filter.ordering)
+        .then(response => {
+          filter.setItems(response.data.items)
+          filter.setTotalPages(response.data.meta.total_pages)
+          console.log(filter.items)
+        } )
+        .catch(err => console.log(err))
+
   }
+

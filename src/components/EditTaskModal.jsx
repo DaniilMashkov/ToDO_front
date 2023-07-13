@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {
-  Modal,
+import React, {useState} from "react";
+import {Modal,
   useDisclosure,
   ModalOverlay,
   ModalContent,
@@ -10,27 +9,26 @@ import {
   FormControl,
   ModalFooter,
   Button,
-  Textarea, Input,
+  Textarea
 } from '@chakra-ui/react'
-import {FiEdit3, FiFolderPlus, FiLogIn, FiLogOut} from 'react-icons/fi'
+import {FiEdit3} from 'react-icons/fi'
 import taskApi from "../utils/api";
 import filter from '../store/service';
+import {changePage} from "../utils/changePage";
 
-const EditTaskModal = ({id, fetchItem}) => {
+const EditTaskModal = (props) => {
   const {isOpen, onOpen, onClose} = useDisclosure()
-  const [item, setItem] = useState('')
-
   const initialRef = React.useRef(null)
   const finalRef = React.useRef(null)
+  const [text, setText] = useState(props.item.body)
 
+  console.log('render edit')
   function close(){
     onClose();
-    taskApi.putItem(id, item);
-    fetchItem(filter.page)
+    taskApi.putItem(props.item.id_task, {body:text}, props.props.token)
+      .then(() => changePage(filter.page))
   }
-  useEffect(() => {
-    taskApi.getItem(id).then(response => setItem(response.data.body))
-  }, [])
+
   return (
       <>
         <Button leftIcon={<FiEdit3/>} colorScheme='teal' variant='solid' onClick={onOpen}>Edit
@@ -47,7 +45,7 @@ const EditTaskModal = ({id, fetchItem}) => {
             <ModalCloseButton/>
             <ModalBody pb={6}>
               <FormControl p={3}>
-                <Textarea value={item} onChange={(event) => {setItem(event.target.value)}} placeholder='Enter task text'/>
+                <Textarea value={text} onChange={(event) => {setText(event.target.value)}} placeholder='Enter task text'/>
               </FormControl>
             </ModalBody>
             <ModalFooter>
