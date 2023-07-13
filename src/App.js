@@ -1,6 +1,5 @@
 import React from 'react';
 import {observer} from "mobx-react-lite";
-import {BrowserRouter} from 'react-router-dom'
 import {ChakraProvider, Box, Grid, theme, Heading, Stack,} from '@chakra-ui/react';
 import {ColorModeSwitcher} from './ColorModeSwitcher';
 import LoginModal from "./components/LoginModal";
