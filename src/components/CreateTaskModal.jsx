@@ -15,7 +15,6 @@ import {
 import {FiFolderPlus} from 'react-icons/fi'
 import taskApi from "../utils/api";
 import filter from "../store/service";
-import {changePage} from "../utils/changePage";
 
 const CreateTaskModal = () => {
   const {isOpen, onOpen, onClose} = useDisclosure()
@@ -30,7 +29,7 @@ const CreateTaskModal = () => {
   function close() {
     onClose();
     taskApi.postItem(username, email, body)
-        .then(() => changePage(filter.page))
+        .then(() => filter.getPage(filter.page))
   }
 
   return (<>

@@ -2,14 +2,15 @@ import {FiLogOut} from 'react-icons/fi'
 import api from "../utils/api";
 import {Button} from "@chakra-ui/react";
 import React from "react";
+import auth from "../store/auth";
 
-function LogOut(props) {
+function LogOut() {
 
   function logMeOut() {
+
     api.logOut()
-        .then(() => {
-          props.token()
-        }).catch((error) => {
+        .then(() => {auth.removeToken()})
+        .catch((error) => {
       if (error.response) {
         console.log(error.response)
         console.log(error.response.status)

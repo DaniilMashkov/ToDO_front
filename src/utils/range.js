@@ -3,4 +3,3 @@ export function *range(start=0, stop=1, step=1) {
     yield i
   }
 }
-

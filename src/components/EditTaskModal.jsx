@@ -14,7 +14,6 @@ import {Modal,
 import {FiEdit3} from 'react-icons/fi'
 import taskApi from "../utils/api";
 import filter from '../store/service';
-import {changePage} from "../utils/changePage";
 
 const EditTaskModal = (props) => {
   const {isOpen, onOpen, onClose} = useDisclosure()
@@ -22,11 +21,10 @@ const EditTaskModal = (props) => {
   const finalRef = React.useRef(null)
   const [text, setText] = useState(props.item.body)
 
-  console.log('render edit')
   function close(){
     onClose();
-    taskApi.putItem(props.item.id_task, {body:text}, props.props.token)
-      .then(() => changePage(filter.page))
+    taskApi.putItem(props.item.id_task, {body:text, admin_mark:true})
+      .then(() => filter.getPage(filter.page))
   }
 
   return (

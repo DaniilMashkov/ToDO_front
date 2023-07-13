@@ -1,23 +1,25 @@
 import {Button, SimpleGrid, Stack} from "@chakra-ui/react";
-import {range} from "../utils/range";
 import filter from "../store/service";
-import {changePage} from "../utils/changePage";
 import React from "react";
+import {range} from "../utils/range";
+import {observer} from "mobx-react-lite";
 
-const Pagination = () => {
+const Pagination = observer( () => {
+
   return (
       <SimpleGrid p={8}>
         <Stack direction={"row"} justifySelf={"center"}>
+
           {[...range(1, filter.totalPages)]
               .map((el, index) =>
                   <Button isActive={filter.page === el}
                           key={index}
-                          onClick={() => changePage(el)}>{el}
+                          onClick={() => filter.getPage(el)}>{el}
                   </Button>)}
         </Stack>
 
       </SimpleGrid>
   )
-}
+})
 
 export default Pagination

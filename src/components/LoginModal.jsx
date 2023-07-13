@@ -14,8 +14,9 @@ import {
 } from '@chakra-ui/react'
 import {FiLogIn} from 'react-icons/fi'
 import api from "../utils/api";
+import auth from "../store/auth";
 
-const LoginModal = (props) => {
+const LoginModal = () => {
   const {isOpen, onOpen, onClose} = useDisclosure()
 
   const initialRef = React.useRef(null)
@@ -26,7 +27,7 @@ const LoginModal = (props) => {
   function logMeIn(event) {
     api.postToken(loginForm.username, loginForm.password)
         .then((response) => {
-          props.setToken(response.data.access_token) && onClose()
+          auth.setToken(response.data.access_token) && onClose()
         }).catch((error) => {
       if (error.response) {
         console.log(error.response)

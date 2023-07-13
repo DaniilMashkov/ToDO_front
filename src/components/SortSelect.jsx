@@ -1,7 +1,6 @@
 import {Select, SimpleGrid, Stack} from "@chakra-ui/react";
 import filter from "../store/service";
 import React from "react";
-import {itemFilter} from "../utils/itemFilter";
 
 const sortSelect = () => {
   return(
@@ -10,7 +9,7 @@ const sortSelect = () => {
             <Select placeholder='Sort by...' onChange={(event) => {
               filter.setSort(event.target.value);
               filter.setPage(1)
-              itemFilter(filter.page, filter.sort, filter.ordering)
+              filter.getFilterItems()
             }
             }>
               <option value='"user".username'>Username</option>
@@ -20,7 +19,7 @@ const sortSelect = () => {
             <Select placeholder='Order by...' onChange={(event) => {
               filter.setOrdering(event.target.value);
               filter.setPage(1);
-              itemFilter(filter.page, filter.sort, filter.ordering)
+              filter.getFilterItems()
             }
             }>
               <option value=' DESC'>Descending</option>
