@@ -1,4 +1,5 @@
 import axios from "axios";
+import auth from '../store/auth'
 
 const api = axios.create()
 api.interceptors.request.use(function (config) {
@@ -8,7 +9,7 @@ api.interceptors.request.use(function (config) {
     return Promise.reject(error);
   });
 class Items {
-	url = 'http://5.63.159.85:5000/api'
+	url = 'http://5.63.159.85/api'
  	async getItems(page, sort, ordering) {
 		return api.get(`${this.url}/tasks?page=${page}&sort=${sort}&ordering=${ordering}`);
 	}
@@ -20,8 +21,14 @@ class Items {
 		return api.put(`${this.url}/tasks/${id}`, data);
 	}
 
-	async postToken(username, password) {
-		return api.post(`${this.url}/token`, {username, password});
+	async logIn(username, password) {
+		return api.post(`${this.url}/login`, {username, password});
+	}
+
+	async verifyToken() {
+		return api.get(`${this.url}/verifytoken`)
+		.then( () => {auth.setToken(auth.getToken())})
+		.catch((err) => null)
 	}
 
 	async logOut() {

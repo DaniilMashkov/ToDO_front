@@ -10,13 +10,7 @@ function LogOut() {
 
     api.logOut()
         .then(() => {auth.removeToken()})
-        .catch((error) => {
-      if (error.response) {
-        console.log(error.response)
-        console.log(error.response.status)
-        console.log(error.response.headers)
-      }
-    })
+        .catch((error) => null )
   }
 
   return (

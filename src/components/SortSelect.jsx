@@ -5,7 +5,7 @@ import React from "react";
 const sortSelect = () => {
   return(
     <SimpleGrid p={5}>
-          <Stack direction='row' spacing={5}>*/}>
+          <Stack direction='row' spacing={5}>
             <Select placeholder='Sort by...' onChange={(event) => {
               filter.setSort(event.target.value);
               filter.setPage(1)

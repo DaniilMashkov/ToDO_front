@@ -9,7 +9,7 @@ import {Modal,
   FormControl,
   ModalFooter,
   Button,
-  Textarea
+  Textarea,
 } from '@chakra-ui/react'
 import {FiEdit3} from 'react-icons/fi'
 import taskApi from "../utils/api";
@@ -23,13 +23,14 @@ const EditTaskModal = (props) => {
 
   function close(){
     onClose();
-    taskApi.putItem(props.item.id_task, {body:text, admin_mark:true})
+    taskApi.putItem(props.item.id_task, {body:text})
       .then(() => filter.getPage(filter.page))
-  }
+      .catch(() => window.location.reload(false))
+  };
 
   return (
       <>
-        <Button leftIcon={<FiEdit3/>} colorScheme='teal' variant='solid' onClick={onOpen}>Edit
+        <Button size={'xs'} leftIcon={<FiEdit3/>} colorScheme='teal' variant='solid' onClick={onOpen}>Edit
         </Button>
         <Modal
             initialFocusRef={initialRef}
