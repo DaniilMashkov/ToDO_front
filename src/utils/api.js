@@ -9,7 +9,7 @@ api.interceptors.request.use(function (config) {
     return Promise.reject(error);
   });
 class Items {
-	url = 'http://5.63.159.85/api'
+	url = 'http://5.63.159.85:5000/api'
  	async getItems(page, sort, ordering) {
 		return api.get(`${this.url}/tasks?page=${page}&sort=${sort}&ordering=${ordering}`);
 	}
