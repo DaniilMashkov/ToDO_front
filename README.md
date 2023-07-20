@@ -1,4 +1,4 @@
-# Frontend part of [ToDo_app](https://github.com/DaniilMashkov/ToDo_app)
+### Frontend part of [ToDo_app](https://github.com/DaniilMashkov/ToDo_app)
     Used packages:
     - react
     - axios
