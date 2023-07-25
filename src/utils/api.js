@@ -8,7 +8,8 @@ api.interceptors.request.use(function (config) {
   }, function (error) {
     return Promise.reject(error);
   });
-class Items {
+
+class Api {
 	url = 'http://localhost:5000/api'
  	async getItems(page, sort, ordering) {
 		return api.get(`${this.url}/tasks?page=${page}&sort=${sort}&ordering=${ordering}`);
@@ -36,4 +37,4 @@ class Items {
 	}
 }
 
-export default new Items()
+export default new Api()

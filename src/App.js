@@ -1,7 +1,7 @@
 import React from 'react';
 import {observer} from "mobx-react-lite";
 import {ChakraProvider, Box, Grid, theme, Heading, Stack, } from '@chakra-ui/react';
-import {ColorModeSwitcher} from './ColorModeSwitcher';
+import {ColorModeSwitcher} from './components/ColorModeSwitcher';
 import LoginModal from "./components/LoginModal";
 import CreateTaskModal from "./components/CreateTaskModal";
 import SortSelect from "./components/SortSelect";
